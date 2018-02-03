@@ -1,0 +1,25 @@
+{
+  "name": "awaitor",
+  "version": "1.0.0",
+  "description": "await task among several async functions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Magnus Lin",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magnuslim/awaitor.git"
+  },
+  "keywords": [
+    "js",
+    "promise",
+    "async",
+    "await"
+  ],
+  "bugs": {
+    "url": "https://github.com/magnuslim/awaitor/issues"
+  },
+  "homepage": "https://github.com/magnuslim/awaitor#readme"
+}
