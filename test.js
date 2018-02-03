@@ -1,9 +1,10 @@
-const awaitor = require('./index');
+const Awaitor = require('./index');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 let question1 = 'who is your favorite singer?';
 let question2 = 'why?';
 
+let awaitor = new Awaitor();
 awaitor.declare(question1);
 awaitor.declare(question2);
 
