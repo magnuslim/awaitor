@@ -1,35 +1,43 @@
 module.exports = class Awaitor {
     constructor() {
         this._tasks = {};
-        this._callbacks = {};        
+        this._callbacks = {};
+        this._resolved = {};
+        this._rejected = {};
     }
 
-    declare(task) {
-        if(this._tasks[task]) throw new Error(`cannot re-declare a task: ${task}`);
-        this._tasks[task] = new Promise((resolve, reject) => {
-            this._callbacks[task] = (resolved, data) => {
-                if(resolved) {
-                    resolve(data);
-                }
-                else {
-                    reject(data);
-                }
-            };
-        });
+    unresolved() {
+        return Object.keys(this._tasks);
     }
 
     wait(task) {
-        return this._tasks[task];
+        if(this._resolved[task]) {
+            return new Promise(resolve => resolve(this._resolved[task]));
+        }
+        else if(this._rejected[task]) {
+            return new Promise((_, reject) => reject(this._rejected[task]));
+        }
+        else {
+            if(!this._tasks[task]) {
+                this._tasks[task] = new Promise((resolve, reject) => {
+                    this._callbacks[task] = (resolved, data) => {
+                        resolved ? resolve(data) : reject(data);
+                        this._callbacks[task] = undefined;
+                    };
+                });
+            }
+            return this._tasks[task];
+        }
     }
 
     resolve(task, data) {
         if(this._callbacks[task]) this._callbacks[task](true, data);
-        else throw new Error(`task ${task} is not defined.`);
+        if(!this._resolved[task] && !this._rejected[task]) this._resolved[task] = data;
     }
 
     reject(task, data) {
         if(this._callbacks[task]) this._callbacks[task](false, data);
-        else throw new Error(`task ${task} is not defined.`);
+        if(!this._resolved[task] && !this._rejected[task]) this._rejected[task] = data;
     }
 
 }
