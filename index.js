@@ -7,7 +7,7 @@ module.exports = class Awaitor {
     }
 
     unresolved() {
-        return Object.keys(this._tasks);
+        return Object.keys(this._callbacks);
     }
 
     wait(task) {
@@ -22,7 +22,7 @@ module.exports = class Awaitor {
                 this._tasks[task] = new Promise((resolve, reject) => {
                     this._callbacks[task] = (resolved, data) => {
                         resolved ? resolve(data) : reject(data);
-                        this._callbacks[task] = undefined;
+                        delete this._callbacks[task];
                     };
                 });
             }
