@@ -36,7 +36,7 @@ let awaitor = new Awaitor();
     awaitor.resolve(question3, 'I am kiding');
 
     // resovling/rejecting a question that no one is waiting for it now.
-    // It will just go silent, and take effect immediately when someone wait for it.
+    // It will just go silent, and take effect immediately as soon as someone wait for it.
     awaitor.reject(question4, 'I dont want to tell you');
 })()
 .catch(console.error);
