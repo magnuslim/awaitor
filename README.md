@@ -4,7 +4,7 @@ await task among several async functions.
 
 # Usage
 ```js
-const Awaitor = require('./index');
+const Awaitor = require('awaitor');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 let question1 = 'who is your favorite singer?';

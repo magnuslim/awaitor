@@ -1,6 +1,6 @@
 {
   "name": "awaitor",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "await task among several async functions.",
   "main": "index.js",
   "scripts": {

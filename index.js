@@ -11,10 +11,10 @@ module.exports = class Awaitor {
     }
 
     wait(task) {
-        if(this._resolved[task]) {
-            return new Promise(resolve => resolve(this._resolved[task]));
+        if(task in this._resolved) {
+            return Promise.resolve(this._resolved[task]);
         }
-        else if(this._rejected[task]) {
+        else if(task in this._rejected) {
             return new Promise((_, reject) => reject(this._rejected[task]));
         }
         else {
@@ -30,12 +30,12 @@ module.exports = class Awaitor {
         }
     }
 
-    resolve(task, data) {
+    resolve(task, data = undefined) {
         if(this._callbacks[task]) this._callbacks[task](true, data);
         if(!this._resolved[task] && !this._rejected[task]) this._resolved[task] = data;
     }
 
-    reject(task, data) {
+    reject(task, data = undefined) {
         if(this._callbacks[task]) this._callbacks[task](false, data);
         if(!this._resolved[task] && !this._rejected[task]) this._rejected[task] = data;
     }
